@@ -21,6 +21,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,7 +44,7 @@ import com.google.inject.Inject;
 @Deploy({ "org.nuxeo.ecm.automation.test", "org.nuxeo.ecm.platform.url.api",
         "org.nuxeo.ecm.platform.url.core", "org.nuxeo.ecm.platform.types.api",
         "org.nuxeo.ecm.platform.types.core", "org.nuxeo.ecm.automation.io",
-        "org.nuxeo.io.etcd", "org.nuxeo.io.etcd.test" })
+        "org.nuxeo.etcd", "org.nuxeo.etcd.test" })
 @Jetty(port = 18090)
 @RepositoryConfig(cleanup = Granularity.METHOD)
 public class TestService {
