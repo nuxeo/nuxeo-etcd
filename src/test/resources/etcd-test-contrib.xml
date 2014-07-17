@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="org.nuxeo.io.etcd.test">
+
+  <extension target="org.nuxeo.etcd.EtcdService" point="configuration">
+    <configuration>
+      <endpoint>http://localhost:18090</endpoint>
+    </configuration>
+  </extension>
+
+</component>

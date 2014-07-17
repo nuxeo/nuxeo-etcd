@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="org.nuxeo.etcd.EtcdService">
+
+  <implementation class="org.nuxeo.etcd.EtcdServiceImpl"/>
+
+  <service>
+    <provide interface="org.nuxeo.etcd.EtcdService"/>
+  </service>
+
+  <extension-point name="configuration">
+    <object class="org.nuxeo.etcd.EtcdConfigurationDescriptor" />
+  </extension-point>
+
+</component>
