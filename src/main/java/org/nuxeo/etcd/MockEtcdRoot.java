@@ -15,7 +15,7 @@
  *     nuxeo.io Team
  */
 
-package org.nuxeo.io.etcd;
+package org.nuxeo.etcd;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

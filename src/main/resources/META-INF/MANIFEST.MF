@@ -5,6 +5,6 @@ Bundle-ClassPath: .
 Bundle-Version: 1.0
 Bundle-Name: nuxeo-io-etcd
 Bundle-ManifestVersion: 2
-Bundle-SymbolicName: org.nuxeo.io.etcd
+Bundle-SymbolicName: org.nuxeo.etcd
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Nuxeo-Component: OSGI-INF/io-etcd-service.xml

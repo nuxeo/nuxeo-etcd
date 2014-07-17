@@ -15,7 +15,7 @@
  *     nuxeo.io Team
  */
 
-package org.nuxeo.io.etcd;
+package org.nuxeo.etcd;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -27,8 +27,6 @@ import org.junit.runner.RunWith;
 import org.nuxeo.ecm.automation.test.EmbeddedAutomationServerFeature;
 import org.nuxeo.ecm.core.test.annotations.Granularity;
 import org.nuxeo.ecm.core.test.annotations.RepositoryConfig;
-import org.nuxeo.etcd.EtcdResult;
-import org.nuxeo.etcd.EtcdService;
 import org.nuxeo.runtime.test.runner.Deploy;
 import org.nuxeo.runtime.test.runner.Features;
 import org.nuxeo.runtime.test.runner.FeaturesRunner;
@@ -60,33 +58,33 @@ public class TestService {
 
     @Test
     public void testServiceRegistration() {
-        assertNotNull(etcdService);
+        Assert.assertNotNull(etcdService);
     }
 
     @Test
     public void shouldSetValueAndReturnOldOne() {
         EtcdResult result = etcdService.set("mykey", "myvalue");
-        assertNull(result.prevNode);
-        assertEquals("myvalue", result.node.value);
+        Assert.assertNull(result.prevNode);
+        Assert.assertEquals("myvalue", result.node.value);
 
         result = etcdService.set("mykey", "newvalue");
-        assertEquals("newvalue", result.node.value);
-        assertEquals("myvalue", result.prevNode.value);
+        Assert.assertEquals("newvalue", result.node.value);
+        Assert.assertEquals("myvalue", result.prevNode.value);
     }
 
     @Test
     public void shouldGetValueFromKey() {
         etcdService.set("mykey", "myvalue");
         EtcdResult result = etcdService.get("mykey");
-        assertEquals("myvalue", result.node.value);
+        Assert.assertEquals("myvalue", result.node.value);
 
-        assertEquals("myvalue", etcdService.getValue("mykey"));
+        Assert.assertEquals("myvalue", etcdService.getValue("mykey"));
     }
 
     @Test
     public void shouldReturnNullOnMissingKey() {
-        assertNull(etcdService.get("mykey"));
-        assertNull(etcdService.getValue("mykey"));
+        Assert.assertNull(etcdService.get("mykey"));
+        Assert.assertNull(etcdService.getValue("mykey"));
     }
 
     @Test
@@ -94,10 +92,10 @@ public class TestService {
         etcdService.set("mykey", "myvalue");
 
         EtcdResult result = etcdService.delete("mykey");
-        assertNull(result.node.value);
-        assertEquals("myvalue", result.prevNode.value);
+        Assert.assertNull(result.node.value);
+        Assert.assertEquals("myvalue", result.prevNode.value);
 
         result = etcdService.get("mykey");
-        assertNull(result);
+        Assert.assertNull(result);
     }
 }

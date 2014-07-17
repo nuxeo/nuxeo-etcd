@@ -3,9 +3,9 @@ Bundle-Vendor: Nuxeo
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
 Bundle-Version: 1.0
-Bundle-Name: nuxeo-io-etcd
+Bundle-Name: nuxeo-etcd
 Bundle-ManifestVersion: 2
-Bundle-SymbolicName: org.nuxeo.io.etcd.test
+Bundle-SymbolicName: org.nuxeo.etcd.test
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Nuxeo-WebModule: org.nuxeo.ecm.webengine.app.WebEngineModule;name=etcd
 Nuxeo-Component: etcd-test-contrib.xml
