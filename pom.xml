@@ -9,7 +9,7 @@
 
   <groupId>org.nuxeo.etcd</groupId>
   <artifactId>nuxeo-etcd</artifactId>
-  <version>0.2-SNAPSHOT</version>
+  <version>0.2</version>
   <name>Nuxeo etcd client</name>
   <description>Nuxeo etcd client</description>
 
