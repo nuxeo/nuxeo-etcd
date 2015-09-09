@@ -5,10 +5,28 @@
 
   <service>
     <provide interface="org.nuxeo.etcd.EtcdService"/>
+    <provide interface="org.nuxeo.etcd.retrier.EtcdRetrier"/>
   </service>
 
   <extension-point name="configuration">
     <object class="org.nuxeo.etcd.EtcdConfigurationDescriptor" />
   </extension-point>
+
+  <extension target="org.nuxeo.ecm.core.event.EventServiceComponent"
+    point="listener">
+    <listener name="etcdRetrierListener"
+      class="org.nuxeo.etcd.retrier.EtcdRetrierListener">
+      <event>etcdRetry</event>
+    </listener>
+  </extension>
+
+  <extension target="org.nuxeo.ecm.platform.scheduler.core.service.SchedulerRegistryService"
+    point="schedule">
+    <schedule id="etcdRetry">
+      <eventId>etcdRetry</eventId>
+      <!-- every 5 secs -->
+      <cronExpression>0/5 * * * * ?</cronExpression>
+    </schedule>
+  </extension>
 
 </component>

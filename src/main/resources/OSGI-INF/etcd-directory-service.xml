@@ -1,24 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<component name="org.nuxeo.etcd.test">
+<component name="org.nuxeo.etcd.directory">
 
-  <extension target="org.nuxeo.etcd.EtcdService" point="configuration">
-    <configuration>
-      <endpoint>http://localhost:18090</endpoint>
-    </configuration>
+  <extension target="org.nuxeo.ecm.core.schema.TypeService" point="schema">
+    <schema name="etcd_action" src="etcd_action.xsd" />
   </extension>
 
   <extension target="org.nuxeo.ecm.directory.sql.SQLDirectoryFactory"
     point="directories">
 
-    <directory name="etcdAction" remove="true">
-    </directory>
-
     <directory name="etcdAction">
       <schema>etcd_action</schema>
-      <dbDriver>${nuxeo.test.vcs.driver}</dbDriver>
-      <dbUrl>${nuxeo.test.vcs.url}</dbUrl>
-      <dbUser>${nuxeo.test.vcs.user}</dbUser>
-      <dbPassword>${nuxeo.test.vcs.password}</dbPassword>
+      <dataSource>java:/nxsqldirectory</dataSource>
       <cacheTimeout>3600</cacheTimeout>
       <cacheMaxSize>1000</cacheMaxSize>
       <table>etcdAction</table>

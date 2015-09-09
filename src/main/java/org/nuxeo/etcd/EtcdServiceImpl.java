@@ -24,6 +24,7 @@ import javax.ws.rs.core.Response;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.nuxeo.etcd.retrier.EtcdRetrier;
 import org.nuxeo.runtime.model.ComponentContext;
 import org.nuxeo.runtime.model.ComponentInstance;
 import org.nuxeo.runtime.model.DefaultComponent;
@@ -167,4 +168,14 @@ public class EtcdServiceImpl extends DefaultComponent implements EtcdService {
         }
     }
 
+    @Override
+    public <T> T getAdapter(Class<T> adapter) {
+        if (adapter.isAssignableFrom(getClass())) {
+            return adapter.cast(this);
+        }
+        if (adapter.isAssignableFrom(EtcdRetrier.class)) {
+            return adapter.cast(EtcdRetrier.newInstance());
+        }
+        return null;
+    }
 }
