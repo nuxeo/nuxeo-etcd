@@ -53,7 +53,7 @@ public class EtcdServiceImpl extends DefaultComponent implements EtcdService {
     protected WebResource service;
 
     @Override
-    public void activate(ComponentContext context) throws Exception {
+    public void activate(ComponentContext context) {
         ClientConfig config = new DefaultClientConfig();
         client = Client.create(config);
     }
@@ -157,8 +157,7 @@ public class EtcdServiceImpl extends DefaultComponent implements EtcdService {
 
     @Override
     public void registerContribution(Object contribution,
-            String extensionPoint, ComponentInstance contributor)
-            throws Exception {
+            String extensionPoint, ComponentInstance contributor) {
         if (CONFIGURATION_EP.equalsIgnoreCase(extensionPoint)) {
             configuration = (EtcdConfigurationDescriptor) contribution;
             service = client.resource(computeURL());

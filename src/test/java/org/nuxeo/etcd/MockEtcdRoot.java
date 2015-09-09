@@ -17,7 +17,6 @@
 
 package org.nuxeo.etcd;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
@@ -31,7 +30,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
-import org.nuxeo.ecm.core.api.impl.blob.InputStreamBlob;
+import org.nuxeo.ecm.core.api.impl.blob.ByteArrayBlob;
 import org.nuxeo.ecm.webengine.forms.FormData;
 import org.nuxeo.ecm.webengine.model.WebObject;
 import org.nuxeo.ecm.webengine.model.impl.ModuleRoot;
@@ -46,7 +45,7 @@ public class MockEtcdRoot extends ModuleRoot {
     @PUT
     @Path("{key}")
     public Object doPutKey(@PathParam("key")
-    String key) throws IOException {
+                           String key) throws IOException {
         FormData form = ctx.getForm();
         String value = form.getFormProperty("value");
         boolean created = false;
@@ -63,9 +62,9 @@ public class MockEtcdRoot extends ModuleRoot {
                     + "    \"modifiedIndex\": 19827,\n"
                     + "    \"createdIndex\": 19827\n" + "  }\n" + "}";
             return Response.ok(
-                    new InputStreamBlob(new ByteArrayInputStream(String.format(
+                    new ByteArrayBlob(String.format(
                             createdJson, key, value).getBytes("UTF-8")),
-                            "application/json")).status(Response.Status.CREATED).build();
+                    "application/json").status(Response.Status.CREATED).build();
         } else {
             String modifiedJson = "{\n" + "  \"action\": \"set\",\n"
                     + "  \"node\": {\n" + "    \"key\": \"/%s\",\n"
@@ -77,9 +76,9 @@ public class MockEtcdRoot extends ModuleRoot {
                     + "    \"modifiedIndex\": 19824,\n"
                     + "    \"createdIndex\": 19824\n" + "  }\n" + "}";
             return Response.ok(
-                    new InputStreamBlob(new ByteArrayInputStream(String.format(
+                    new ByteArrayBlob(String.format(
                             modifiedJson, key, value, key, oldValue).getBytes(
-                            "UTF-8")), "application/json")).status(
+                            "UTF-8")), "application/json").status(
                     Response.Status.OK).build();
         }
     }
@@ -87,14 +86,13 @@ public class MockEtcdRoot extends ModuleRoot {
     @GET
     @Path("{key}")
     public Object doGetKey(@PathParam("key")
-    String key) throws UnsupportedEncodingException {
+                           String key) throws UnsupportedEncodingException {
         if (!keysToValues.containsKey(key)) {
             String s = "{\n" + "    \"cause\": \"%s\",\n"
                     + "    \"errorCode\": 100,\n" + "    \"index\": 1,\n"
                     + "    \"message\": \"Key Not Found\"\n" + "}";
             return Response.status(Response.Status.NOT_FOUND).entity(
-                    new InputStreamBlob(new ByteArrayInputStream(String.format(
-                            s, key).getBytes("UTF-8")), "application/json")).build();
+                    new ByteArrayBlob(String.format(s, key).getBytes("UTF-8"), "application/json")).build();
         }
 
         String s = "{\n" + "    \"action\": \"get\",\n" + "    \"node\": {\n"
@@ -103,15 +101,15 @@ public class MockEtcdRoot extends ModuleRoot {
                 + "        \"modifiedIndex\": 2,\n"
                 + "        \"value\": \"%s\"\n" + "    }\n" + "}";
 
-        return new InputStreamBlob(new ByteArrayInputStream(String.format(s,
-                key, keysToValues.get(key)).getBytes("UTF-8")),
+        return new ByteArrayBlob(String.format(s,
+                key, keysToValues.get(key)).getBytes("UTF-8"),
                 "application/json");
     }
 
     @DELETE
     @Path("{key}")
     public Object doDeleteKey(@PathParam("key")
-    String key) throws UnsupportedEncodingException {
+                              String key) throws UnsupportedEncodingException {
         if (!keysToValues.containsKey(key)) {
             return Response.status(Response.Status.NOT_FOUND);
         }
@@ -125,8 +123,8 @@ public class MockEtcdRoot extends ModuleRoot {
                 + "        \"modifiedIndex\": 3,\n"
                 + "        \"createdIndex\": 3\n" + "    }\n" + "}";
 
-        return new InputStreamBlob(new ByteArrayInputStream(String.format(s,
-                key, key, keysToValues.remove(key)).getBytes("UTF-8")),
+        return new ByteArrayBlob(String.format(s,
+                key, key, keysToValues.remove(key)).getBytes("UTF-8"),
                 "application/json");
     }
 }
