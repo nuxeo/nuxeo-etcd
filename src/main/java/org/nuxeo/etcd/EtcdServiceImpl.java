@@ -25,6 +25,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.nuxeo.etcd.retrier.EtcdRetrier;
+import org.nuxeo.runtime.api.Framework;
 import org.nuxeo.runtime.model.ComponentContext;
 import org.nuxeo.runtime.model.ComponentInstance;
 import org.nuxeo.runtime.model.DefaultComponent;
@@ -74,6 +75,14 @@ public class EtcdServiceImpl extends DefaultComponent implements EtcdService {
 
     @Override
     public EtcdResult set(String key, String value, int ttl) {
+        EtcdResult res = doSet(key, value, ttl);
+        if (res == null) {
+            Framework.getService(EtcdRetrier.class).saveSet(key, value, ttl);
+        }
+        return res;
+    }
+
+    public EtcdResult doSet(String key, String value, int ttl) {
         WebResource webResource = service.path(key);
         Form form = new Form();
         form.add("value", value);
